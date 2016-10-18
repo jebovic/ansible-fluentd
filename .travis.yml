@@ -37,7 +37,7 @@ script:
   # test role tasks
   - curl "http://localhost:9880/myapp.access" -d 'json={"event":"foobar"}'
   - >
-    tail /var/log/td-agent/myapp.access*
+    docker exec "$(cat ${container_id})" tail /var/log/td-agent/myapp.access*
     | grep -q 'foobar'
     && (echo 'fluentd is working' && exit 0)
     || (echo 'fluentd is not working' && exit 1)
