@@ -1,0 +1,11 @@
+---
+
+- name: restart fluentd
+  command: "td-agent --dry-run -c {{ fluentd_config_path }}/td-agent.conf"
+  changed_when: true
+  notify: do restart fluentd
+
+- name: do restart fluentd
+  service:
+    name:  "{{ fluentd_daemon }}"
+    state: restarted

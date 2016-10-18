@@ -1,0 +1,71 @@
+---
+
+- name: install key
+  apt_key:
+    url: "{{ fluentd_apt_key_url }}"
+    state: present
+
+- name: add repos
+  apt_repository:
+    repo: "{{ item }}"
+    state: present
+    update_cache: yes
+  with_items: "{{ fluentd_apt_repositories }}"
+
+- name: install apt packages
+  apt:
+    name:  "{{ item }}"
+    state:              latest
+    install_recommends: false
+    update_cache:       yes
+    cache_valid_time:   300
+  with_items: "{{ fluentd_packages }}"
+
+- name: install gem plugins
+  gem:
+    name: "{{ item }}"
+    executable: /opt/td-agent/embedded/bin/fluent-gem
+    state: latest
+    user_install: no
+  with_items: "{{ fluentd_plugins }}"
+  notify:
+    - restart fluentd
+
+- name: ensure config dir exists
+  file:
+    path: "{{ fluentd_config_path }}/conf.d"
+    state: directory
+    owner: td-agent
+    group: td-agent
+    mode: 0744
+
+- name: ensure log dir exists and is writable
+  file:
+    path: "{{ fluentd_log_path }}"
+    state: directory
+    owner: td-agent
+    group: td-agent
+    mode: 0744
+
+- name: config
+  template:
+    src: "{{ item }}.j2"
+    dest: "{{ fluentd_config_path }}/{{ item }}"
+    owner: td-agent
+    group: td-agent
+    mode: 0644
+  with_items:
+    - conf.d/filter.conf
+    - conf.d/match.conf
+    - conf.d/source.conf
+    - conf.d/system.conf
+    - td-agent.conf
+  notify:
+    - restart fluentd
+
+- name: service start
+  service:
+    name:  "{{ item }}"
+    state: started
+  with_items:
+    - "{{ fluentd_daemon }}"

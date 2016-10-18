@@ -1,0 +1,15 @@
+{% for fluent_filter in fluentd_filter_config %}
+<filter {{ fluent_filter["name"] }}>
+{% for key in fluent_filter|sort if key != "name" %}
+{% if key == "record" %}
+  <record>
+  {% for record_key in fluent_filter[key]|sort %}
+    {{ record_key }} {{ fluent_filter[key][record_key] }}
+  {% endfor %}
+  </record>
+{% else %}
+  {{ key }} {{ fluent_filter[key] }}
+{% endif %}
+{% endfor %}
+</filter>
+{% endfor %}

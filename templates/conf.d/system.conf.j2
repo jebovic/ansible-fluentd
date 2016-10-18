@@ -1,0 +1,5 @@
+<system>
+{% for key in fluentd_system_config|sort %}
+  {{ key }} {{ fluentd_system_config[key] }}
+{% endfor %}
+</system>

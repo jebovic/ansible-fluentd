@@ -1,0 +1,7 @@
+{% for source in fluentd_source_config %}
+<source>
+{% for key in source|sort %}
+  {{ key }} {{ source[key] }}
+{% endfor %}
+</source>
+{% endfor %}
