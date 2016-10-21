@@ -67,5 +67,6 @@
   service:
     name:  "{{ item }}"
     state: started
+    enabled: yes
   with_items:
     - "{{ fluentd_daemon }}"
