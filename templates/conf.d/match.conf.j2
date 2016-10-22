@@ -1,7 +1,15 @@
 {% for match in fluentd_match_config|sort %}
 <match {{ match["pattern"] }}>
 {% for key in match|sort if key != "pattern" %}
+{% if key == "server" %}
+  <server>
+  {% for server_key in match[key]|sort %}
+    {{ server_key }} {{ match[key][server_key] }}
+  {% endfor %}
+  </server>
+{% else %}
   {{ key }} {{ match[key] }}
+{% endif %}
 {% endfor %}
 </match>
 {% endfor %}
