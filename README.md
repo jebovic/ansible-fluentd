@@ -8,7 +8,7 @@ Install and configure fluentd
 Role Variables
 --------------
 
-```
+```yaml
 # fluentd install configuration
 fluentd_apt_key_url: https://packages.treasuredata.com/GPG-KEY-td-agent
 fluentd_apt_repositories:
@@ -48,11 +48,17 @@ fluentd_filter_config:
 Example Playbook
 ----------------
 
+```yaml
+- hosts: servers
+  roles:
+     - { role: jebovic.fluentd }
 ```
-    - hosts: servers
-      roles:
-         - { role: jebovic.fluentd }
-```
+
+Tags
+----
+
+* fluentd_config : only update config and restart service
+* fluentd_plugins : only install plugins and restart service
 
 License
 -------

@@ -30,6 +30,7 @@
   with_items: "{{ fluentd_plugins }}"
   notify:
     - restart fluentd
+  tags: fluentd_plugins
 
 - name: ensure config dir exists
   file:
@@ -38,6 +39,7 @@
     owner: td-agent
     group: td-agent
     mode: 0744
+  tags: fluentd_config
 
 - name: ensure log dir exists and is writable
   file:
@@ -46,6 +48,7 @@
     owner: td-agent
     group: td-agent
     mode: 0744
+  tags: fluentd_config
 
 - name: config
   template:
@@ -62,6 +65,7 @@
     - td-agent.conf
   notify:
     - restart fluentd
+  tags: fluentd_config
 
 - name: service start
   service:
