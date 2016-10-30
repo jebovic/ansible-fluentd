@@ -10,6 +10,8 @@ fluentd_daemon: td-agent
 fluentd_config_path: /etc/td-agent
 fluentd_log_path: /var/log/td-agent
 fluentd_plugins: []
+fluentd_user: td-agent
+fluentd_usergroup: td-agent
 
 # fluentd basic configuration
 fluentd_system_config:
