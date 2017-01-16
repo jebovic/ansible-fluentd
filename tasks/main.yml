@@ -4,21 +4,30 @@
   apt_key:
     url: "{{ fluentd_apt_key_url }}"
     state: present
+  register: fluentd_key_installed
 
 - name: add repos
   apt_repository:
     repo: "{{ item }}"
     state: present
-    update_cache: yes
+    update_cache: no
+  when: fluentd_key_installed|success
+  register: fluentd_repo_installed
   with_items: "{{ fluentd_apt_repositories }}"
+
+- name: update apt cache
+  apt:
+    update_cache:       yes
+  when: fluentd_repo_installed|changed
 
 - name: install apt packages
   apt:
     name:  "{{ item }}"
     state:              latest
-    install_recommends: false
+    install_recommends: no
     update_cache:       yes
-    cache_valid_time:   300
+    cache_valid_time:   86400
+  when: fluentd_repo_installed|success
   with_items: "{{ fluentd_packages }}"
 
 - name: install gem plugins
