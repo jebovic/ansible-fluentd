@@ -7,5 +7,5 @@
 
 - name: do restart fluentd
   service:
-    name:  "{{ fluentd_daemon }}"
+    name: "{{ fluentd_daemon }}"
     state: restarted

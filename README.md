@@ -142,16 +142,16 @@ fluentd_filter_config:
     "@type": geoip
     geoip_lookup_key: remote
     record:
-      location:        "'[${longitude[\"remote\"]},${latitude[\"remote\"]}]'"
-      latitude:        '${latitude["remote"]}'
-      longitude:       '${longitude["remote"]}'
-      country_code3:   '${country_code3["remote"]}'
-      country:         '${country_code["remote"]}'
-      country_name:    '${country_name["remote"]}'
-      dma:             '${dma_code["remote"]}'
-      area:            '${area_code["remote"]}'
-      region:          '${region["remote"]}'
-      city:            '${city["remote"]}'
+      location: "'[${longitude[\"remote\"]},${latitude[\"remote\"]}]'"
+      latitude: '${latitude["remote"]}'
+      longitude: '${longitude["remote"]}'
+      country_code3: '${country_code3["remote"]}'
+      country: '${country_code["remote"]}'
+      country_name: '${country_name["remote"]}'
+      dma: '${dma_code["remote"]}'
+      area: '${area_code["remote"]}'
+      region: '${region["remote"]}'
+      city: '${city["remote"]}'
     tag: "geoip.${tag}"
     skip_adding_null_record: "true"
 ```
