@@ -11,14 +11,14 @@
     repo: "{{ item }}"
     state: present
     update_cache: no
-  when: fluentd_key_installed|success
+  when: fluentd_key_installed is success
   register: fluentd_repo_installed
   with_items: "{{ fluentd_apt_repositories }}"
 
 - name: update apt cache
   apt:
     update_cache: yes
-  when: fluentd_repo_installed|changed
+  when: fluentd_repo_installed is changed
 
 - name: install apt packages
   apt:
@@ -27,7 +27,7 @@
     install_recommends: no
     update_cache: yes
     cache_valid_time: 86400
-  when: fluentd_repo_installed|success
+  when: fluentd_repo_installed is success
   with_items: "{{ fluentd_packages }}"
 
 - name: install gem plugins
