@@ -6,6 +6,8 @@ fluentd_apt_repositories:
   - "deb http://packages.treasuredata.com/2/{{ ansible_distribution | lower }}/{{ ansible_distribution_release | lower }}/ {{ ansible_distribution_release | lower }} contrib"
 fluentd_packages:
   - td-agent
+fluentd_apt_package_state: latest
+fluentd_gem_state: latest
 fluentd_daemon: td-agent
 fluentd_config_path: /etc/td-agent
 fluentd_log_path: /var/log/td-agent
