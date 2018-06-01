@@ -17,22 +17,7 @@ fluentd_usergroup: td-agent
 fluentd_system_config:
   process_name: ansible-fluentd
 
-fluentd_source_config:
-  - "@type": forward
-    port: 24224
-  - "@type": http
-    port: 9880
+fluentd_source_config: []
+fluentd_match_config: []
+fluentd_filter_config: []
 
-fluentd_match_config:
-  - pattern: "myapp.access"
-    "@type": file
-    path: /var/log/td-agent/myapp.access
-    time_slice_format: "%Y%m%d"
-    time_slice_wait: 10m
-    time_format: "%Y%m%dT%H%M%S%z"
-
-fluentd_filter_config:
-  - name: myapp.access
-    "@type": record_transformer
-    record:
-      host_param: '"#{Socket.gethostname}"'
