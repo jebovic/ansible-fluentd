@@ -76,6 +76,11 @@
     - restart fluentd
   tags: fluentd_config
 
+- name: create td-agent service configuration
+  template:
+    src: service-settings.sh.j2
+    dest: /etc/default/td-agent
+
 - name: service start
   service:
     name: "{{ item }}"

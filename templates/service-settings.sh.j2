@@ -1,0 +1,6 @@
+# {{ ansible_managed }}
+# This file is sourced by /bin/sh from /etc/init.d/td-agent
+# Options to pass to td-agent
+{% for name, value in fluentd_system_service_settings.items() | sort %}
+{{ name }}="{{ value }}"
+{% endfor %}
