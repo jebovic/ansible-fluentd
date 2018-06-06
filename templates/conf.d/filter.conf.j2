@@ -1,4 +1,4 @@
-{% for fluent_filter in fluentd_filter_config %}
+{% for fluent_filter in fluentd_filter_config | sort(attribute="name") %}
 <filter {{ fluent_filter["name"] }}>
 {% for key in fluent_filter|sort if key != "name" %}
 {% if key == "record" %}

@@ -1,4 +1,4 @@
-{% for match in fluentd_match_config|sort %}
+{% for match in fluentd_match_config | sort(attribute="pattern") %}
 <match {{ match["pattern"] }}>
 {% for key in match|sort if key != "pattern" %}
 {% if key == "server" %}
